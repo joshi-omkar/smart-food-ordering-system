@@ -1,13 +1,14 @@
-const Restaurants = require("./Models/ResturantModel")
-const AllItems = require("./Models/ItemModel")
-const AllOrders = require("./Models/OrdersModel")
 const startupDebugger = require("debug")("app:startup");
 const helmet = require("helmet");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const express = require("express");
+const cors = require('cors')
 const app = express();
 
+app.use(cors())
+
+//mongodb+srv://thakker:abcd@1234@cluster0.lt0en.mongodb.net/<dbname>?retryWrites=true&w=majority
 mongoose
   .connect(
     "mongodb+srv://omkar:omkar@cluster0.g658zun.mongodb.net/?retryWrites=true&w=majority",
@@ -16,31 +17,37 @@ mongoose
   .then(() => console.log("Connection established to MongoDB..."))
   .catch((err) => console.log("Could not connect to MongoDB...", err));
 
-// const restaurantSchema = new mongoose.Schema({
-//   name: String,
-//   OwnerName: String,
-// });
+const restaurantSchema = new mongoose.Schema({
+  name: String,
+  OwnerName: String,
+});
 
-// const itemSchema = new mongoose.Schema({
-//   name: String,
-//   price: Number,
-//   quantity: Number,
-//   restaurantId: String,
-//   imgUrl: String,
-// });
+const userSchema = new mongoose.Schema({
+  name: String,
+  mobileno: String,
+});
 
-// const Orders = new mongoose.Schema({
-//   restaurantId: String,
-//   tableNo: Number,
-//   items: String,
-//   totalAmount: Number,
-// });
+const itemSchema = new mongoose.Schema({
+  name: String,
+  price: Number,
+  quantity: Number,
+  restaurantId: String,
+  imgUrl: String,
+});
 
-// const Restaurants = mongoose.model("Restaurants", restaurantSchema);
+const Orders = new mongoose.Schema({
+  restaurantId: String,
+  tableNo: Number,
+  items: String,
+  totalAmount: Number,
+});
 
-// const AllItems = mongoose.model("AllMenuItems", itemSchema);
+const Restaurants = mongoose.model("Restaurants", restaurantSchema);
+const User = mongoose.model("User", userSchema);
 
-// const AllOrders = mongoose.model("AllOrders", Orders);
+const AllItems = mongoose.model("AllMenuItems", itemSchema);
+
+const AllOrders = mongoose.model("AllOrders", Orders);
 
 app.use(express.json());
 app.use(helmet()); //secures the page by adding various http headers
@@ -53,6 +60,23 @@ app.get("/", (req, res) => {
 });
 
 /************   User    ****************/
+
+app.post("/customer_details", async (req, res) => {
+    console.log(JSON.stringify(req.body));
+  const user = new User({
+    name: req.body.name,
+    mobileno: req.body.mobileNo,
+  });
+
+  try {
+    const result = await user.save();
+    console.log(result);
+  } catch (e) {
+    console.log("Yaha error1!");
+  }
+
+  res.send("accepted");
+});
 
 // '/getMenu/:id'   GET
 app.get("/getMenu/:id", async (req, res) => {
@@ -187,24 +211,6 @@ app.post("/addItem", async (req, res) => {
 
 /************   Owner-End    ****************/
 
-app.post("/newRestaurant", async (req, res) => {
-    console.log(JSON.stringify(req.body));
-    const obj = req.body;
-  
-    const item = new Restaurants(obj);
-  
-    try {
-      const result = await item.save(); //Asynchronus operation, takes time
-      console.log(result);
-    } catch (e) {
-      //console.log(e.message);
-      for (field in e.errors) console.log(e.errors[field].message);
-    }
-  
-    res.send(obj);
-    return;
-  });
-
 async function createRestaurant() {
   const restaurant = new Restaurants({
     name: "Burger King",
@@ -239,6 +245,6 @@ async function createItem() {
 }
 //createItem();
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
-app.listen(PORT, () => console.log(`Listening on port ${PORT}..`));
+app.listen(3001, () => console.log(`Listening on port ${PORT}..`));
