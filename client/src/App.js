@@ -10,10 +10,10 @@ function App() {
   return (
     <div className="App">
       <Navbar/>
-      <ConfirmOrder/>
+      {/* <ConfirmOrder/> */}
       {/* <QrReaderComponent/> */}
       {/* <WatingOderUserInfo/> */}
-      {/* <Menu/> */}
+      <Menu/>
       {/* <ItemDetails/> */}
     </div>
   );

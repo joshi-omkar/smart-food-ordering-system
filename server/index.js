@@ -5,10 +5,10 @@ const mongoose = require("mongoose");
 const express = require("express");
 const cors = require('cors')
 const app = express();
+const uploadImage = require('./uploadImage')
 
 app.use(cors())
 
-//mongodb+srv://thakker:abcd@1234@cluster0.lt0en.mongodb.net/<dbname>?retryWrites=true&w=majority
 mongoose
   .connect(
     "mongodb+srv://omkar:omkar@cluster0.g658zun.mongodb.net/?retryWrites=true&w=majority",
@@ -28,11 +28,12 @@ const userSchema = new mongoose.Schema({
 });
 
 const itemSchema = new mongoose.Schema({
-  name: String,
-  price: Number,
-  quantity: Number,
-  restaurantId: String,
-  imgUrl: String,
+  dishName: String,
+  dishPrice: String,
+  dishDescription: String,
+  imageUrl: String,
+  selectedOption: String,
+  currentCategory: String
 });
 
 const Orders = new mongoose.Schema({
@@ -244,6 +245,8 @@ async function createItem() {
   }
 }
 //createItem();
+
+app.use("/file", uploadImage);
 
 const PORT = process.env.PORT || 3001;
 
