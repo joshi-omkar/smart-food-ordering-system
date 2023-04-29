@@ -59,10 +59,12 @@
 
 .rate-star {
   font-size: 8px;
+  margin-top: -5px;
 }
 
 .rate-count {
   font-size: 8px;
+  margin-top: -5px;
 }
 
 .order-count-conatiner {
@@ -137,6 +139,7 @@
   width: 25%;
   height: 2.5rem;
   background-color: #1f1d2b;
+  cursor: pointer;
 }
 
 .item-containers {
@@ -147,12 +150,12 @@
 
 .item-img {
   width: 105px;
-  height: 105px;
+  /* height: 105px; */
   border-radius: 12px;
 }
 
 .item-description {
-  font-size: 10px;
+  font-size: 8px;
   color: #cececece;
 }
 

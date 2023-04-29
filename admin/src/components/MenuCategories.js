@@ -1,32 +1,56 @@
 import React, { useState } from "react";
 import "../Styles/MenuCategories.css";
 
-const Category = ({ link, setCurrentCategory }) => {
-  const handleOnClickCategory = () => {
-    setCurrentCategory(link);
-  };
-
+const Category = ({ name, isActive, onClick }) => {
   return (
-    <button onClick={handleOnClickCategory} className="CategoryLink">
-      <p>{link}</p>
+    <button
+      className={`category ${isActive ? "active" : ""}`}
+      onClick={onClick}
+    >
+      <p>{name}</p>
     </button>
   );
 };
 
-const MenuCategories = ({setCurrentCategory}) => {
-  
+const MenuCategories = ({ setCurrentCategory, dishes, setFilter }) => {
+  const [activeIndex, setActiveIndex] = useState(-1);
+  const handleCategoryClick = (index) => {
+    setActiveIndex(index);
+  };
+
+  const filterByCategory = (categoryName) => {
+    const dishesByCategory = dishes.filter(
+      (dish) => dish.currentCategory === categoryName
+    );
+    setFilter(dishesByCategory);
+  };
+
+  const categories = [
+    { name: "Roti" },
+    { name: "Sabji" },
+    { name: "Rice" },
+    { name: "Chinese" },
+  ];
 
   return (
     <div className="MenuCategories">
       <div>
-        <Category link={"Roti"} setCurrentCategory={setCurrentCategory} />
-        <Category link={"Sabji"} setCurrentCategory={setCurrentCategory} />
-        <Category link={"Rice"} setCurrentCategory={setCurrentCategory} />
-        <Category link={"Chinese"} setCurrentCategory={setCurrentCategory} />
+        {categories.map((category, index) => (
+          <Category
+            key={index}
+            name={category.name}
+            isActive={index === activeIndex}
+            onClick={() => {
+              handleCategoryClick(index);
+              setCurrentCategory(category.name);
+              filterByCategory(category.name);
+            }}
+          />
+        ))}
       </div>
-      <button className="CategoryLink">
-      <p>Add Category</p>
-    </button>
+      <button className="category">
+        <p>Add Category</p>
+      </button>
     </div>
   );
 };

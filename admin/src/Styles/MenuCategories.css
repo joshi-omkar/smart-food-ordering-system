@@ -1,4 +1,4 @@
-.CategoryLink {
+.category {
   width: 280px;
   height: 61px;
   left: 31px;
@@ -13,21 +13,31 @@
   transition: all 0.3s ease-in-out;
 }
 
-.CategoryLink > p {
+.category > p {
   font-style: normal;
   font-weight: 400;
   font-size: 1.2rem;
   line-height: 29px;
 }
 
-.CategoryLink > p {
+.category > p {
   font-style: normal;
   font-weight: 400;
   font-size: 1.2rem;
   line-height: 29px;
 }
 
-.CategoryLink:focus{
+.category.active{
+  background-color: #6BE2BE;
+  color: #000;
+}
+
+/* .CategoryLink:active{
+  background-color: #6BE2BE;
+  color: #000;
+} */
+
+.CategoryLinkclicked{
   background-color: #6BE2BE;
   color: #000;
 }
@@ -142,6 +152,7 @@
 .title-button-container {
   display: flex;
   justify-content: space-between;
+  padding: 10px;
 }
 
 .title-button-container > h3 {
@@ -317,6 +328,7 @@
 .item-description {
   font-size: 10px;
   color: #cececece;
+  width: 300px;
 }
 
 .divider {

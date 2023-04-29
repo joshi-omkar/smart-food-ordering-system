@@ -210,6 +210,15 @@ app.post("/addItem", async (req, res) => {
   return;
 });
 
+app.get("/getItem", async (req, res) => {
+  const id = req.params.id;
+
+  const menu_card = await AllItems.find({ });
+  console.log(menu_card);
+
+  res.send(menu_card);
+});
+
 /************   Owner-End    ****************/
 
 async function createRestaurant() {

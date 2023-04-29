@@ -56,7 +56,7 @@ const UploadImage = ({setImageUrl}) => {
   return (
     <div>
       {image ? (
-        <div>
+        <div style={{display: 'flex'}}>
           <div className="buttons-after-upload-image-model">
             <button
               id="submit-btn"
