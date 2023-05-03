@@ -1,0 +1,136 @@
+.bill-container {
+  width: 30rem;
+  height: 35rem;
+  display: flex;
+  flex-direction: column;
+  background-color: #d9d9d9;
+  border-radius: 0.5rem;
+  color: #000;
+}
+
+.header-container {
+  padding: 1.5rem 1.5rem 0 1.5rem;
+  border-bottom: dashed 1px black;
+}
+
+.t-name {
+  padding: 0.5rem 0.5rem 0 0;
+  font-size: 14px;
+}
+
+.order-no {
+  padding: 0.3rem 0.5rem 0.5rem 0;
+  font-size: 16px;
+}
+
+.t-stamp {
+  text-align: center;
+  padding: 0.3rem 0.5rem 0 0.5rem;
+}
+
+.b-no {
+  text-align: center;
+  padding: 0 0.5rem 0.5rem 0.5rem;
+}
+
+.hotel-info {
+  padding: 0.5rem 1.5rem 0 1.5rem;
+  border-bottom: dashed 1px black;
+  text-align: center;
+}
+
+.h-name {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.addr {
+}
+
+.p-no {
+  padding: 0 0.5rem 0.5rem 0.5rem;
+}
+
+.bill-table {
+  padding: 0.5rem 1.5rem 0.5rem 1.5rem;
+  border-bottom: dashed 1px black;
+}
+
+.h {
+  padding: 0 0 0.6rem 0;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 500;
+  border-bottom: dashed 1px black;
+}
+
+.i-name {
+  flex: 0.5;
+}
+
+.qty {
+  flex: 0.1;
+}
+
+.rate {
+  flex: 0.2;
+}
+
+.q-rate {
+  flex: 0.2;
+}
+
+.food {
+  padding: 0.3rem 0 0 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.sub {
+  padding: 0.5rem 1.5rem 0.5rem 0;
+  text-align: right;
+  border-bottom: dashed 1px black;
+}
+
+.total {
+  padding: 0.5rem 1.5rem 0.5rem 0;
+  text-align: right;
+  border-bottom: dashed 1px black;
+}
+
+.footer-container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+}
+
+.generatebill {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 50px;
+}
+
+.generatebill-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.generatebill-buttons > button {
+  background-color: #6be2be;
+  border-radius: 12px;
+  border: none;
+  width: 350px;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.generatebill-buttons > button:last-of-type {
+  background-color: #ea7c69;
+}

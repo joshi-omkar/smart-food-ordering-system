@@ -1,8 +1,8 @@
 .table {
   width: 221px;
-  height: 283px;
+  /* height: 283px; */
   color: #fff;
-  background-color: #b8ffb1;
+  /* background-color: #b8ffb1; */
   border-radius: 1rem;
   padding: 10px;
   margin-top: 5.65%;
@@ -44,7 +44,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2px 0;
+  /* padding: 2px 0; */
 }
 .conatiner-2 {
   display: flex;
@@ -54,11 +54,16 @@
 }
 
 .item-name {
-  font-size: 16px;
+  font-size: 0.9rem;
 }
 
 .price {
   font-size: 14px;
+  margin-top: -5px;
+}
+
+.orders{
+  min-height: 150px;
 }
 
 .quantity {
@@ -88,4 +93,5 @@
   border-radius: 0.5rem;
   border: none;
   font-size: 12px;
+  cursor: pointer;
 }

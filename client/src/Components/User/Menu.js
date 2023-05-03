@@ -3,15 +3,20 @@ import "../../Styles/Menu.css";
 import Rating from "../../Assets/Rating";
 import ButtonForAllPurpose from "../ButtonForAllPurpose";
 import axios from "axios";
+import { useParams, useNavigate } from "react-router-dom";
 
-const Item = ({ dishName, dishDescription, dishPrice, imageUrl }) => {
+const Item = ({ dishName, dishDescription, dishPrice, imageUrl, id, setCart, cart, tableId, currentCategory }) => {
   const [num, setNum] = useState(0);
 
   const addItem = () => {
     setNum(num + 1);
+    setCart([...cart, {id, tableId, dishName, dishDescription, dishPrice, imageUrl, currentCategory}])
+    
   };
+  
   const removeItem = () => {
     setNum(num - 1);
+    setCart(cart.filter((item) => item.id !== id));
   };
   return (
     <div className="item-container">
@@ -32,13 +37,13 @@ const Item = ({ dishName, dishDescription, dishPrice, imageUrl }) => {
       >
         {num === 0 ? null : (
           <>
-            <span className="" onClick={removeItem}>
+            <span style={{cursor: 'pointer'}} className="" onClick={removeItem}>
               &#8722;
             </span>
             <span className="">{num}</span>
           </>
         )}
-        <span className="" onClick={addItem}>
+        <span style={{cursor: 'pointer'}} className="" onClick={addItem}>
           &#43;
         </span>
       </div>
@@ -50,10 +55,12 @@ const Category = ({ children }) => {
   return <div className="category">{children}</div>;
 };
 
-const Menu = () => {
+const Menu = ({cart, setCart}) => {
   const [allDishes, setAllDishes] = useState([]);
+  // const [cart, setCart] = useState([])
   const baseURL = "http://localhost:3001/getItem";
-
+  const navigate = useNavigate()
+  const { tableId } = useParams()
   const getData = () => {
     axios.get(baseURL).then((response) => {
       setAllDishes(response.data);
@@ -63,9 +70,16 @@ const Menu = () => {
   useEffect(() => {
     getData();
   }, []);
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  const localStorageCart = JSON.parse(localStorage.getItem('cart'))
+  const handleOnClickSendToKitchen = () =>{
+    navigate(`/confirmOrder/${tableId}`)
+  }
   return (
     <div>
-      <div className="title">Hey Foodies ! Welcome to our Restaurant.</div>
+      <div className="title">Hey Foodies! Welcome to our Restaurant.</div>
       <div className="input-conatiner">
         <input
           type="text"
@@ -91,6 +105,12 @@ const Menu = () => {
                   dishDescription={dish.dishDescription}
                   dishPrice={dish.dishPrice}
                   imageUrl={dish.imageUrl}
+                  key={dish._id}
+                  id={dish._id}
+                  setCart={setCart}
+                  cart={cart.length === 0 ? localStorageCart : cart}
+                  tableId={tableId}
+                  currentCategory={dish.currentCategory}
                 />
               );
             })}
@@ -106,6 +126,7 @@ const Menu = () => {
           text={"Send To Kitchen"}
           marginTop="0px"
           width={"100%"}
+          onclick={handleOnClickSendToKitchen}
         />
       </div>
     </div>

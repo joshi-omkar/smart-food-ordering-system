@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import IconBig from "../../Assets/IconBig";
 import "../../Styles/WatingOderUserInfo.css";
 import ButtonForAllPurpose from "../ButtonForAllPurpose";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import IconImg from '../../Assets/Icon.png'
 
@@ -12,12 +12,14 @@ const WatingOderUserInfo = () => {
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
+  const {tableId} = useParams()
 
 
   const UserInfo = async (e) => {
     e.preventDefault();
 
     const user = {name, mobileNo}
+    console.log(user)
     
     await axios
       .post('http://localhost:3001/customer_details', user)
@@ -25,10 +27,10 @@ const WatingOderUserInfo = () => {
         if(res.data.message){
             setError(res.data.message);
         }else{
-            navigate("/menu");
-            console.log(res.data._id)
+            navigate(`/menu/${tableId}`);
+            console.log(res.data)
             // setIsLogedIn(true);
-            localStorage.setItem("token", mobileNo)
+            localStorage.setItem("user", JSON.stringify(user))
         }
       })
       .catch((error) => {

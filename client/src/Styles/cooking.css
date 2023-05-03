@@ -1,0 +1,76 @@
+.Cooking-contain {
+    width: 100%;
+    height: 100%;
+    gap: 20px;
+  }
+  
+  .Cooking-fon {
+    padding: 20px;
+  }
+  
+  .Cooking-divider {
+    width: 300px;
+    height: 5px;
+    border-radius: 2rem;
+    background-color: #fff;
+    margin: 20px;
+  }
+  
+  .Cooking-fon {
+    text-align: center;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 35px;
+  }
+  
+  .Cooking-btn-container {
+    width: 320px;
+    height: 130px;
+    padding: 1rem;
+    background-color: #1f1d2b;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .Cooking-hed {
+    padding-bottom: 5px;
+  }
+  
+  .Cooking-btn {
+    width: 273px;
+    height: 42px;
+    font-weight: bolder;
+    font-size: 16px;
+    background: #53a38f;
+    border-radius: 0.5rem;
+    color: black;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .Cooking-loti {
+    margin-top: 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .progress-bar {
+    background-color: #e0e0e0;
+    height: 4px;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 281px;
+  }
+  
+  .progress-bar__fill {
+    height: 4px;
+    transition: width 0.5s ease-in-out;
+    background-color: #24FF00;
+  }
+  

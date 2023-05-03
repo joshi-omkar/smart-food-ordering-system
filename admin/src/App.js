@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Tables from "./components/Tables";
 import Menu from './components/Menu'
+import GenerateBill from './components/GenerateBill'
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Routes>
         <Route path="/tables" exact element={<Tables/>}/>
         <Route path="/menu" exact element={<Menu/>}/>
+        <Route path="/generateBill/:tableId"  exact element={<GenerateBill />} />
       </Routes>
     </div>
   );

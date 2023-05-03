@@ -1,22 +1,24 @@
 import React from 'react'
 import '../Styles/PreorderCard.css'
 
-const Item = () => {
+const Item = ({dishName, count}) => {
     return (
       <div className="pre-item-container">
-        <span className="pre-order">Munchow Soup</span>
-        <span className="pre-qty">2</span>
+        <span className="pre-order">{dishName}</span>
+        <span className="pre-qty">{count}</span>
       </div>
     );
   };
 
-const PreorderCard = () => {
+const PreorderCard = ({prebookOrder, userData}) => {
+  console.log(prebookOrder)
   return (
     <div className="pre-order-container">
       <div className="pre-user">
+        
         <div className="pre-user-info">
-          <span className="pre-user-name">Jhon Doe</span>
-          <span className="pre-user-no">7788947893</span>
+          <span className="pre-user-name">{prebookOrder[0].userName}</span>
+          <span className="pre-user-no">{prebookOrder[0].mobileNo}</span>
         </div>
         <div className="pre-head-count">4 People</div>
       </div>
@@ -26,10 +28,11 @@ const PreorderCard = () => {
           <span className="pre-order">Order</span>
           <span className="pre-qty">Qty</span>
         </div>
-        <Item />
-        <Item />
-        <Item />
-        <Item />
+        {prebookOrder.map((prebook, key)=>{
+          return(<>
+          <Item dishName={prebook.dishName} count={prebook.count} />
+          </>)
+        })}
       </div>
       <div className="pre-divider"></div>
       <div className="pre-btn-container">

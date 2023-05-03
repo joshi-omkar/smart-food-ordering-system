@@ -37,10 +37,12 @@ const itemSchema = new mongoose.Schema({
 });
 
 const Orders = new mongoose.Schema({
-  restaurantId: String,
-  tableNo: Number,
+  items: String
+});
+
+const prebookOrders = new mongoose.Schema({
   items: String,
-  totalAmount: Number,
+  userInfo: String
 });
 
 const Restaurants = mongoose.model("Restaurants", restaurantSchema);
@@ -49,6 +51,8 @@ const User = mongoose.model("User", userSchema);
 const AllItems = mongoose.model("AllMenuItems", itemSchema);
 
 const AllOrders = mongoose.model("AllOrders", Orders);
+
+const PrebookOrders = mongoose.model("PrebookOrders", prebookOrders);
 
 app.use(express.json());
 app.use(helmet()); //secures the page by adding various http headers
@@ -91,27 +95,33 @@ app.get("/getMenu/:id", async (req, res) => {
 
 // '/placeOrder'    POST
 app.post("/placeOrder", async (req, res) => {
-  console.log(JSON.stringify(req.body));
 
-  // restaurantId: String,
-  // tableNo: Number,
-  // items: String,
-  // totalAmount: Number
-  let totAmo = 0,
-    itms = [],
-    tableNo = req.body.tableNo;
-  for (let i = 0; i < req.body.cart.length; i++) {
-    totAmo += req.body.cart[i].price * req.body.cart[i].quantity;
-    itms[i] = req.body.cart[i].name + " x" + req.body.cart[i].quantity;
-  }
-
-  console.log({ totAmo, itms, tableNo });
+  const items = JSON.stringify(req.body)
 
   const order = new AllOrders({
-    restaurantId: req.body.cart[0].restaurantId,
-    tableNo: tableNo,
-    items: itms.toString(),
-    totalAmount: totAmo,
+    items: items
+  });
+
+  try {
+    const result = await order.save();
+    console.log(result);
+  } catch (e) {
+    for (field in e.errors)
+      console.log("Yaha error1!! :-" + e.errors[field].message);
+  }
+
+  res.send("accepted");
+});
+
+app.post("/prebook", async (req, res) => {
+  console.log("prebook",JSON.stringify(req.body));
+
+  const items = JSON.stringify(req.body.items)
+  const userInfo = JSON.stringify(req.body.userInfo)
+
+  const order = new PrebookOrders({
+    items: items,
+    userInfo: userInfo
   });
 
   try {
@@ -138,10 +148,19 @@ app.post("/placeOrder", async (req, res) => {
 /************   Owner    ****************/
 
 // GetOrders
-app.get("/getOrders/:id", async (req, res) => {
+app.get("/getOrders", async (req, res) => {
   const id = req.params.id;
 
-  const saareKaam = await AllOrders.find({ restaurantId: id });
+  const saareKaam = await AllOrders.find({ });
+  console.log(saareKaam);
+
+  res.send(saareKaam);
+});
+
+app.get("/getPrebookOrders", async (req, res) => {
+  const id = req.params.id;
+
+  const saareKaam = await PrebookOrders.find({ });
   console.log(saareKaam);
 
   res.send(saareKaam);
