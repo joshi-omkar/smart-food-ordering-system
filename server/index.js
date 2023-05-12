@@ -37,7 +37,8 @@ const itemSchema = new mongoose.Schema({
 });
 
 const Orders = new mongoose.Schema({
-  items: String
+  items: Array,
+  tableId: String,
 });
 
 const prebookOrders = new mongoose.Schema({
@@ -47,11 +48,8 @@ const prebookOrders = new mongoose.Schema({
 
 const Restaurants = mongoose.model("Restaurants", restaurantSchema);
 const User = mongoose.model("User", userSchema);
-
 const AllItems = mongoose.model("AllMenuItems", itemSchema);
-
 const AllOrders = mongoose.model("AllOrders", Orders);
-
 const PrebookOrders = mongoose.model("PrebookOrders", prebookOrders);
 
 app.use(express.json());
@@ -94,12 +92,11 @@ app.get("/getMenu/:id", async (req, res) => {
 });
 
 // '/placeOrder'    POST
-app.post("/placeOrder", async (req, res) => {
-
-  const items = JSON.stringify(req.body)
+app.put("/placeOrder", async (req, res) => {
 
   const order = new AllOrders({
-    items: items
+    items: req.body.items,
+    tableId: req.body.tableId,
   });
 
   try {
@@ -239,43 +236,7 @@ app.get("/getItem", async (req, res) => {
 });
 
 /************   Owner-End    ****************/
-
-async function createRestaurant() {
-  const restaurant = new Restaurants({
-    name: "Burger King",
-    OwnerName: "Guptaji Harshit",
-  });
-
-  try {
-    const result = await restaurant.save();
-    console.log(result);
-  } catch (e) {
-    for (field in e.errors)
-      console.log("Yaha error1!! :-" + e.errors[field].message);
-  }
-}
-
-async function createItem() {
-  const item = new AllItems({
-    name: "American Supreme",
-    price: 145,
-    quantity: 1,
-    restaurantId: "6015483f3ebd2f8a415a8952",
-    imgUrl: "abcdes",
-  });
-
-  try {
-    const result = await item.save();
-    console.log(result);
-  } catch (e) {
-    for (field in e.errors)
-      console.log("Yaha error2!! :-" + e.errors[field].message);
-  }
-}
-//createItem();
-
 app.use("/file", uploadImage);
-
 const PORT = process.env.PORT || 3001;
 
 app.listen(3001, () => console.log(`Listening on port ${PORT}..`));

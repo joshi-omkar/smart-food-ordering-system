@@ -60,7 +60,7 @@ const UploadImage = ({setImageUrl}) => {
           <div className="buttons-after-upload-image-model">
             <button
               id="submit-btn"
-              className="btn btn-primary"
+              className="add-item-button"
               type={"submit"}
               onClick={onSubmit}
             >
@@ -68,11 +68,12 @@ const UploadImage = ({setImageUrl}) => {
             </button>
             <UploadImageButton
               setImage={setImage}
+              className='add-item-button'
               buttonName={"Choose another"}
             />
             <button
               id="submit-btn"
-              className="btn btn-primary"
+              className="add-item-button"
               onClick={onClickRemoveImage}
             >
               Remove
@@ -81,7 +82,7 @@ const UploadImage = ({setImageUrl}) => {
         </div>
       ) : (
         <div>
-          <UploadImageButton setImage={setImage} buttonName={"Upload Image"} />
+          <UploadImageButton className='add-item-button' setImage={setImage} buttonName={"Upload Image"} />
         </div>
       )}
     </div>

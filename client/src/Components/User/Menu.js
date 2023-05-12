@@ -5,15 +5,26 @@ import ButtonForAllPurpose from "../ButtonForAllPurpose";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 
-const Item = ({ dishName, dishDescription, dishPrice, imageUrl, id, setCart, cart, tableId, currentCategory }) => {
+const Item = ({
+  dishName,
+  dishDescription,
+  dishPrice,
+  id,
+  setCart,
+  imageUrl,
+  cart,
+  currentCategory,
+}) => {
   const [num, setNum] = useState(0);
 
   const addItem = () => {
     setNum(num + 1);
-    setCart([...cart, {id, tableId, dishName, dishDescription, dishPrice, imageUrl, currentCategory}])
-    
+    setCart([
+      ...cart,
+      { id, dishName, dishDescription, dishPrice, currentCategory },
+    ]);
   };
-  
+
   const removeItem = () => {
     setNum(num - 1);
     setCart(cart.filter((item) => item.id !== id));
@@ -37,13 +48,17 @@ const Item = ({ dishName, dishDescription, dishPrice, imageUrl, id, setCart, car
       >
         {num === 0 ? null : (
           <>
-            <span style={{cursor: 'pointer'}} className="" onClick={removeItem}>
+            <span
+              style={{ cursor: "pointer" }}
+              className=""
+              onClick={removeItem}
+            >
               &#8722;
             </span>
             <span className="">{num}</span>
           </>
         )}
-        <span style={{cursor: 'pointer'}} className="" onClick={addItem}>
+        <span style={{ cursor: "pointer" }} className="" onClick={addItem}>
           &#43;
         </span>
       </div>
@@ -55,12 +70,12 @@ const Category = ({ children }) => {
   return <div className="category">{children}</div>;
 };
 
-const Menu = ({cart, setCart}) => {
+const Menu = ({ cart, setCart }) => {
   const [allDishes, setAllDishes] = useState([]);
   // const [cart, setCart] = useState([])
   const baseURL = "http://localhost:3001/getItem";
-  const navigate = useNavigate()
-  const { tableId } = useParams()
+  const navigate = useNavigate();
+  const { tableId } = useParams();
   const getData = () => {
     axios.get(baseURL).then((response) => {
       setAllDishes(response.data);
@@ -73,10 +88,10 @@ const Menu = ({cart, setCart}) => {
 
   localStorage.setItem("cart", JSON.stringify(cart));
 
-  const localStorageCart = JSON.parse(localStorage.getItem('cart'))
-  const handleOnClickSendToKitchen = () =>{
-    navigate(`/confirmOrder/${tableId}`)
-  }
+  const localStorageCart = JSON.parse(localStorage.getItem("cart"));
+  const handleOnClickSendToKitchen = () => {
+    navigate(`/confirmOrder/${tableId}`);
+  };
   return (
     <div>
       <div className="title">Hey Foodies! Welcome to our Restaurant.</div>
@@ -104,12 +119,11 @@ const Menu = ({cart, setCart}) => {
                   dishName={dish.dishName}
                   dishDescription={dish.dishDescription}
                   dishPrice={dish.dishPrice}
-                  imageUrl={dish.imageUrl}
                   key={dish._id}
                   id={dish._id}
+                  imageUrl={dish.imageUrl}
                   setCart={setCart}
                   cart={cart.length === 0 ? localStorageCart : cart}
-                  tableId={tableId}
                   currentCategory={dish.currentCategory}
                 />
               );

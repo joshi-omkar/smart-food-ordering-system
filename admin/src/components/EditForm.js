@@ -124,9 +124,6 @@ const EditForm = ({
               </div>
               <div>
                 <p>Upload Dish Image</p>
-                {/* <button className="upload-button-style">Upload</button> */}
-  
-                {/* <UploadImageButton setImage={setImage} buttonName={"Upload"} /> */}
                 <UploadImage setImageUrl={setImageUrl} />
               </div>
             </div>

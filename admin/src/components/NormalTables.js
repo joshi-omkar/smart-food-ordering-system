@@ -29,7 +29,18 @@ const TableStatus = ({ color, type }) => {
 const NormalTables = () => {
   const tableNo = [1, 2, 3, 4, 5, 6, 7, 8];
   const [allOrders, setAllOrders] = useState([]);
-  
+
+  const tableStatus = {
+    1: true,
+    2: true,
+    3: true,
+    4: true,
+    5: true,
+    6: true,
+    7: true,
+    8: true,
+  };
+
   const getData = () => {
     axios
       .get("http://localhost:3001/getOrders")
@@ -45,44 +56,31 @@ const NormalTables = () => {
     getData();
   }, []);
 
-  const itemCounts = allOrders.map((order, key) => {
-    order = JSON.parse(order.items);
-    const itemsCount = order.reduce((acc, item) => {
-      const existingItem = acc.find((i) => i.id === item.id);
-      if (existingItem) {
-        existingItem.count += 1;
-      } else {
-        acc.push({
-          id: item.id,
-          dishName: item.dishName,
-          dishDescription: item.dishDescription,
-          dishPrice: item.dishPrice,
-          count: 1,
-          tableId: item.tableId,
-          currentCategory: item.currentCategory,
-        });
-      }
-      return acc;
+  const tableOrder = (table) =>
+    allOrders.filter((item) => Number(item.tableId) === table).reduce((acc, order) => {
+      return acc.concat(order.items);
     }, []);
+  console.log(tableOrder(4))
 
-    return itemsCount;
-  });
+  // const bill = itemCounts.reduce((acc, order) => {
+  //   const tableId = order.tableId;
+  //   const total = order.items.reduce((sum, item) => {
+  //     return sum + item.count * parseInt(item.dishPrice);
+  //   }, 0);
+  //   acc.tableId = acc.tableId ? acc.tableId + total : total;
+  //   return acc;
+  // }, []);
 
-  const bill = itemCounts.reduce((acc, order) => {
-    const tableId = order[0].tableId;
-    const total = order.reduce((sum, item) => {
-      return sum + item.count * parseInt(item.dishPrice);
-    }, 0);
-    acc[tableId] = acc[tableId] ? acc[tableId] + total : total;
-    return acc;
-  }, []);
+  // console.log(bill);
 
-  const riceTables = itemCounts.reduce((acc, curr) => {
-    const tableId = curr[0].tableId;
-    const hasRice = curr.some((order) => order.currentCategory === "Rice");
-    acc[tableId] = hasRice;
-    return acc;
-  }, {});
+  // const riceTables = itemCounts.reduce((acc, curr) => {
+  //   const tableId = curr.tableId;
+  //   const hasRice = curr.items.some(
+  //     (order) => order.currentCategory === "Rice"
+  //   );
+  //   acc.tableId = hasRice;
+  //   return acc;
+  // }, {});
 
   return (
     <div className="Normaltables">
@@ -110,9 +108,9 @@ const NormalTables = () => {
           return (
             <>
               <Table
-                bill={bill}
-                riceTables={riceTables}
-                itemCounts={itemCounts}
+                // bill={bill}
+                // riceTables={riceTables}
+                tableOrder={tableOrder}
                 table={table}
               />
             </>

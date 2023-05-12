@@ -19,12 +19,12 @@ const QrReaderComponent = () => {
   };
 
   return (
-    <div style={
-      {
-        position: 'relative',
-        top: '150px',
-      }
-    }>
+    <div
+      style={{
+        position: "relative",
+        top: "150px",
+      }}
+    >
       <QrReader
         delay={300}
         facingMode={"environment"}
@@ -35,8 +35,6 @@ const QrReaderComponent = () => {
       {result === "prebook"
         ? navigate(`/watingOderUserInfo/${result}`)
         : navigate(`/menu/${result}`)}
-
-      {/* <p>{result}</p> */}
     </div>
   );
 };

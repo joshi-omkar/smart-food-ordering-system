@@ -11,7 +11,6 @@ const Item = ({dishName, count}) => {
   };
 
 const PreorderCard = ({prebookOrder, userData}) => {
-  console.log(prebookOrder)
   return (
     <div className="pre-order-container">
       <div className="pre-user">

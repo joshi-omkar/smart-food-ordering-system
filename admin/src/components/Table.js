@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "../Styles/Table.css";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Item = ({ dishName, dishPrice, count }) => {
@@ -15,17 +14,45 @@ const Item = ({ dishName, dishPrice, count }) => {
   );
 };
 
-const Table = ({ itemCounts, table, bill, riceTables }) => {
+const Table = ({ tableOrder, table }) => {
+  const navigate = useNavigate();
 
-  const navigate  = useNavigate();
+  const itemsByTableId = tableOrder(table).reduce((acc, item) => {
+    const existingItem = acc.find((i) => i.id === item.id);
+    if (existingItem) {
+      existingItem.count += 1;
+    } else {
+      acc.push({
+        id: item.id,
+        dishName: item.dishName,
+        dishDescription: item.dishDescription,
+        dishPrice: item.dishPrice,
+        count: 1,
+        currentCategory: item.currentCategory,
+      });
+    }
+    return acc;
+  }, []);
 
-  const itemsByTableId = itemCounts.filter((item) =>
-    item.some((i) => Number(i.tableId) === table)
+  const bill = itemsByTableId.reduce((sum, item) => {
+    return sum + item.count * parseInt(item.dishPrice);
+  }, 0);
+
+  // const riceTables = itemsByTableId.reduce((acc, curr) => {
+  const riceTables = itemsByTableId.filter(
+    (item) => item.currentCategory === "Rice"
   );
+  //   if (riceItems.length) {
+  //     acc[curr.tableId] = (acc[curr.tableId] || []).concat(riceItems);
+  //   }
+  //   return acc;
+  // }, {});
 
-  const handleClickOnGenerateBill = () =>{
-    navigate(`/generateBill/${table}`)
-  }
+  console.log(riceTables, table);
+
+  const handleClickOnGenerateBill = () => {
+    navigate(`/generateBill/${table}`);
+  };
 
   return (
     <div
@@ -34,7 +61,9 @@ const Table = ({ itemCounts, table, bill, riceTables }) => {
         backgroundColor:
           itemsByTableId.length === 0
             ? "#6EA8FF"
-            : (riceTables[table] ? '#FF364E' :'#B8FFB1'),
+            : riceTables.length !== 0
+            ? "#FF364E"
+            : "#B8FFB1",
       }}
     >
       <div className="inner-container">
@@ -50,24 +79,20 @@ const Table = ({ itemCounts, table, bill, riceTables }) => {
             ? ""
             : itemsByTableId.map((items, key) => {
                 return (
-                  <>
-                    {items.map((item, key) => {
-                      return (
-                        <Item
-                          dishName={item.dishName}
-                          dishPrice={item.dishPrice}
-                          count={item.count}
-                        />
-                      );
-                    })}
-                  </>
+                  <Item
+                    dishName={items.dishName}
+                    dishPrice={items.dishPrice}
+                    count={items.count}
+                  />
                 );
               })}
         </div>
         {/* <div className="divider"></div> */}
         <div className="total-conatiner">
-          <span className="total">&#x20b9; {bill[table]}</span>
-          <button onClick={handleClickOnGenerateBill} className="generate-bill">Generate bill</button>
+          <span className="total">&#x20b9; {bill}</span>
+          <button onClick={handleClickOnGenerateBill} className="generate-bill">
+            Generate bill
+          </button>
         </div>
       </div>
     </div>

@@ -22,8 +22,6 @@ const PreorderBooking = () => {
     const userInfo = JSON.parse(JSON.parse(order.userInfo))
     return userInfo
   })
-
-  console.log(userData)
   
   const prebookOrders = allPrebookOrders.map((order, key)=>{
     const preorder = JSON.parse(order.items);

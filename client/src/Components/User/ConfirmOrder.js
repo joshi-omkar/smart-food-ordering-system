@@ -139,44 +139,43 @@ const ConfirmOrder = ({ cart, setCart }) => {
   const [confirmOrderAnimation, setConformOrderAimantion] = useState(false);
 
   const userInfo = localStorage.getItem("user");
+  const localStorageCart = JSON.parse(localStorage.getItem("cart"));
   const handleSendToKitchen = () => {
-    setConformOrderAimantion(true);
-    setTimeout(() => {
-      navigate(`/cookingOnProcess/${tableId}`)
-    }, 2000)
-    // if (tableId === "prebook") {
-    //   const preorderData = { items: [...cart], userInfo: userInfo };
-    //   console.log(preorderData);
-    //   axios
-    //     .post("http://localhost:3001/prebook", preorderData)
-    //     .then(function(response) {
-    //       setConformOrderAimantion(true);
-    //       console.log(response);
-    //       localStorage.removeItem("cart");
-    //       setCart([]);
-    //       setTimeout(() => {
-    //         navigate(`/menu/${tableId}`);
-    //       }, 2000);
-    //     })
-    //     .catch(function(error) {
-    //       console.log(error);
-    //     });
-    // } else {
-    //   axios
-    //     .post("http://localhost:3001/placeOrder", cart)
-    //     .then(function(response) {
-    //       setConformOrderAimantion(true);
-    //       console.log(response);
-    //       localStorage.removeItem("cart");
-    //       setCart([]);
-    //       setTimeout(() => {
-    //         navigate(`/menu/${tableId}`);
-    //       }, 2000);
-    //     })
-    //     .catch(function(error) {
-    //       console.log(error);
-    //     });
-    // }
+    if (tableId === "prebook") {
+      const preorderData = { items: [...cart], userInfo: userInfo };
+      console.log(preorderData);
+      axios
+        .post("http://localhost:3001/prebook", preorderData)
+        .then(function(response) {
+          setConformOrderAimantion(true);
+          console.log(response);
+          localStorage.removeItem("cart");
+          setCart([]);
+          setTimeout(() => {
+            navigate(`/menu/${tableId}`);
+          }, 2000);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    } else {
+      const orderData = {items: [...cart], tableId: tableId}
+      console.log(orderData)
+      axios
+        .put("http://localhost:3001/placeOrder", orderData)
+        .then(function(response) {
+          setConformOrderAimantion(true);
+          console.log(response);
+          localStorage.removeItem("cart");
+          setCart([]);
+          setTimeout(() => {
+            navigate(`/cookingOnProcess/${tableId}`);
+          }, 2000);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    }
   };
 
   return (
