@@ -38,6 +38,12 @@ export const OrderServed = () => {
 //       }
 //   }, [progress])
 
+  const handleGenerateBill = () => {
+
+    navigate(`/bill/${tableId}`);
+
+  }
+
   return (
     <section class="OrderServed-contain">
       <div className="OrderServed-loti">
@@ -48,7 +54,7 @@ export const OrderServed = () => {
           <button onClick={handleOnOrderAgain} className="OrderServed-btn">
             Order Again
           </button>
-          <button className="OrderServed-btn">
+          <button onClick={handleGenerateBill} className="OrderServed-btn">
           Generate Bill
           </button>
         </div>

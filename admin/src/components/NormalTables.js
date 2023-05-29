@@ -26,21 +26,8 @@ const TableStatus = ({ color, type }) => {
   );
 };
 
-const NormalTables = () => {
-  const tableNo = [1, 2, 3, 4, 5, 6, 7, 8];
+const NormalTables = ({ tableNo, tableStatus }) => {
   const [allOrders, setAllOrders] = useState([]);
-
-  const tableStatus = {
-    1: true,
-    2: true,
-    3: true,
-    4: true,
-    5: true,
-    6: true,
-    7: true,
-    8: true,
-  };
-
   const getData = () => {
     axios
       .get("http://localhost:3001/getOrders")
@@ -54,33 +41,30 @@ const NormalTables = () => {
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [setAllOrders]);
 
   const tableOrder = (table) =>
-    allOrders.filter((item) => Number(item.tableId) === table).reduce((acc, order) => {
-      return acc.concat(order.items);
-    }, []);
-  console.log(tableOrder(4))
+    allOrders
+      .filter((item) => Number(item.tableId) === table)
+      .reduce((acc, order) => {
+        return acc.concat(order.items);
+      }, []);
 
-  // const bill = itemCounts.reduce((acc, order) => {
-  //   const tableId = order.tableId;
-  //   const total = order.items.reduce((sum, item) => {
-  //     return sum + item.count * parseInt(item.dishPrice);
-  //   }, 0);
-  //   acc.tableId = acc.tableId ? acc.tableId + total : total;
-  //   return acc;
-  // }, []);
+  const tableId = tableNo.map((table) => {
+    return allOrders.filter((item) => Number(item.tableId) === table);
+  });
 
-  // console.log(bill);
+  tableId.map((tables) => {
+    return tables.forEach((item) => {
+      const { tableId } = item;
+      tableStatus[tableId] = false;
+      if (!tableId) {
+        tableStatus[tableId] = true;
+      }
+    });
+  });
 
-  // const riceTables = itemCounts.reduce((acc, curr) => {
-  //   const tableId = curr.tableId;
-  //   const hasRice = curr.items.some(
-  //     (order) => order.currentCategory === "Rice"
-  //   );
-  //   acc.tableId = hasRice;
-  //   return acc;
-  // }, {});
+  console.log(tableStatus);
 
   return (
     <div className="Normaltables">
@@ -107,12 +91,7 @@ const NormalTables = () => {
         {tableNo.map((table, key) => {
           return (
             <>
-              <Table
-                // bill={bill}
-                // riceTables={riceTables}
-                tableOrder={tableOrder}
-                table={table}
-              />
+              <Table key={table} tableOrder={tableOrder} table={table} />
             </>
           );
         })}

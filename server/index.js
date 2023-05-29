@@ -3,11 +3,11 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const express = require("express");
-const cors = require('cors')
+const cors = require("cors");
 const app = express();
-const uploadImage = require('./uploadImage')
+const uploadImage = require("./uploadImage");
 
-app.use(cors())
+app.use(cors());
 
 mongoose
   .connect(
@@ -16,11 +16,6 @@ mongoose
   )
   .then(() => console.log("Connection established to MongoDB..."))
   .catch((err) => console.log("Could not connect to MongoDB...", err));
-
-const restaurantSchema = new mongoose.Schema({
-  name: String,
-  OwnerName: String,
-});
 
 const userSchema = new mongoose.Schema({
   name: String,
@@ -33,7 +28,7 @@ const itemSchema = new mongoose.Schema({
   dishDescription: String,
   imageUrl: String,
   selectedOption: String,
-  currentCategory: String
+  currentCategory: String,
 });
 
 const Orders = new mongoose.Schema({
@@ -42,20 +37,19 @@ const Orders = new mongoose.Schema({
 });
 
 const prebookOrders = new mongoose.Schema({
-  items: String,
-  userInfo: String
+  items: Array,
+  userInfo: Object,
 });
 
-const Restaurants = mongoose.model("Restaurants", restaurantSchema);
 const User = mongoose.model("User", userSchema);
 const AllItems = mongoose.model("AllMenuItems", itemSchema);
 const AllOrders = mongoose.model("AllOrders", Orders);
 const PrebookOrders = mongoose.model("PrebookOrders", prebookOrders);
 
 app.use(express.json());
-app.use(helmet()); //secures the page by adding various http headers
+app.use(helmet()); 
 
-app.use(morgan("tiny")); // loggs every request in the console
+app.use(morgan("tiny")); 
 startupDebugger("Morgan enabled");
 
 app.get("/", (req, res) => {
@@ -65,7 +59,6 @@ app.get("/", (req, res) => {
 /************   User    ****************/
 
 app.post("/customer_details", async (req, res) => {
-    console.log(JSON.stringify(req.body));
   const user = new User({
     name: req.body.name,
     mobileno: req.body.mobileNo,
@@ -73,7 +66,6 @@ app.post("/customer_details", async (req, res) => {
 
   try {
     const result = await user.save();
-    console.log(result);
   } catch (e) {
     console.log("Yaha error1!");
   }
@@ -84,16 +76,12 @@ app.post("/customer_details", async (req, res) => {
 // '/getMenu/:id'   GET
 app.get("/getMenu/:id", async (req, res) => {
   const id = req.params.id;
-
   const menu_card = await AllItems.find({ restaurantId: id });
-  console.log(menu_card);
-
   res.send(menu_card);
 });
 
 // '/placeOrder'    POST
 app.put("/placeOrder", async (req, res) => {
-
   const order = new AllOrders({
     items: req.body.items,
     tableId: req.body.tableId,
@@ -101,29 +89,25 @@ app.put("/placeOrder", async (req, res) => {
 
   try {
     const result = await order.save();
-    console.log(result);
   } catch (e) {
     for (field in e.errors)
       console.log("Yaha error1!! :-" + e.errors[field].message);
   }
-
   res.send("accepted");
 });
 
-app.post("/prebook", async (req, res) => {
-  console.log("prebook",JSON.stringify(req.body));
-
-  const items = JSON.stringify(req.body.items)
-  const userInfo = JSON.stringify(req.body.userInfo)
+app.put("/prebook", async (req, res) => {
+  console.log(typeof req.body);
+  const items = req.body.items;
+  const userInfo = req.body.userInfo;
 
   const order = new PrebookOrders({
     items: items,
-    userInfo: userInfo
+    userInfo: userInfo,
   });
 
   try {
     const result = await order.save();
-    console.log(result);
   } catch (e) {
     for (field in e.errors)
       console.log("Yaha error1!! :-" + e.errors[field].message);
@@ -131,14 +115,6 @@ app.post("/prebook", async (req, res) => {
 
   res.send("accepted");
 });
-
-// app.get('/getQrCodeData/:uri', async (req, res) => {
-
-//     let data = req.body.uri;
-//     console.log(qr.decode(req.body.uri));
-
-//     res.send(data);
-// });
 
 /************   User-End    ****************/
 
@@ -146,20 +122,12 @@ app.post("/prebook", async (req, res) => {
 
 // GetOrders
 app.get("/getOrders", async (req, res) => {
-  const id = req.params.id;
-
-  const saareKaam = await AllOrders.find({ });
-  console.log(saareKaam);
-
+  const saareKaam = await AllOrders.find({});
   res.send(saareKaam);
 });
 
 app.get("/getPrebookOrders", async (req, res) => {
-  const id = req.params.id;
-
-  const saareKaam = await PrebookOrders.find({ });
-  console.log(saareKaam);
-
+  const saareKaam = await PrebookOrders.find({});
   res.send(saareKaam);
 });
 
@@ -167,10 +135,50 @@ app.get("/getPrebookOrders", async (req, res) => {
 app.delete("/deleteOrder/:id", async (req, res) => {
   const id = req.params.id;
 
-  let order = await AllOrders.findByIdAndDelete(id);
+  let order = await AllOrders.deleteMany({ tableId: id });
 
   if (!order) {
     // Not existing, return 404
+    res.status(404).send("The course with the given id was not found");
+    return;
+  }
+
+  res.send(order);
+});
+
+app.delete("/deletePreorder/:id", async (req, res) => {
+  const { id } = req.params; 
+
+  try {
+    const deletedOrder = await PrebookOrders.findOneAndDelete({ 'userInfo.mobileNo': id });
+
+    if (deletedOrder) {
+      res.status(200).json({ message: 'Order deleted successfully' });
+    } else {
+      res.status(404).json({ message: 'Order not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting order', error: error.message });
+  }
+});
+
+app.get("/getOrders/:id", async (req, res) => {
+  const id = req.params.id;
+  let order = await AllOrders.find({ tableId: id });
+
+  if (!order) {
+    res.status(404).send("The course with the given id was not found");
+    return;
+  }
+
+  res.send(order);
+});
+
+app.get("/getPrebookOrders/:id", async (req, res) => {
+  const id = req.body
+  let order = await PrebookOrders.find({ 'userInfo.mobileNo': id });
+
+  if (!order) {
     res.status(404).send("The course with the given id was not found");
     return;
   }
@@ -198,13 +206,6 @@ app.get("/login/:id", async (req, res) => {
       _id: -1,
     });
   }
-
-  // if(!restaus) {       // 404 Not found
-  //     res.status(404);//.send('The Restaurant with the given id was not found');
-  // } else {
-  //     console.log("User is there");
-  //     res.send(restaus);
-  // }
 });
 
 // Add Item
@@ -218,7 +219,6 @@ app.post("/addItem", async (req, res) => {
     const result = await item.save(); //Asynchronus operation, takes time
     console.log(result);
   } catch (e) {
-    //console.log(e.message);
     for (field in e.errors) console.log(e.errors[field].message);
   }
 
@@ -229,7 +229,7 @@ app.post("/addItem", async (req, res) => {
 app.get("/getItem", async (req, res) => {
   const id = req.params.id;
 
-  const menu_card = await AllItems.find({ });
+  const menu_card = await AllItems.find({});
   console.log(menu_card);
 
   res.send(menu_card);

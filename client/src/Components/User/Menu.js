@@ -4,6 +4,7 @@ import Rating from "../../Assets/Rating";
 import ButtonForAllPurpose from "../ButtonForAllPurpose";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
+import Search from "../../Assets/search";
 
 const Item = ({
   dishName,
@@ -66,13 +67,14 @@ const Item = ({
   );
 };
 
-const Category = ({ children }) => {
-  return <div className="category">{children}</div>;
-};
-
 const Menu = ({ cart, setCart }) => {
   const [allDishes, setAllDishes] = useState([]);
   // const [cart, setCart] = useState([])
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [filteredDishes, setFilteredDishes] = useState(allDishes);
+  const [selectedCategory, setSelectedCategory] = useState("");
+
   const baseURL = "http://localhost:3001/getItem";
   const navigate = useNavigate();
   const { tableId } = useParams();
@@ -86,34 +88,52 @@ const Menu = ({ cart, setCart }) => {
     getData();
   }, []);
 
-  localStorage.setItem("cart", JSON.stringify(cart));
-
-  const localStorageCart = JSON.parse(localStorage.getItem("cart"));
-  const handleOnClickSendToKitchen = () => {
-    navigate(`/confirmOrder/${tableId}`);
+  const Category = ({ children }) => {
+    return (
+      <div
+        onClick={() => handleCategoryFilter(`${children}`)}
+        className="category"
+      >
+        {children}
+      </div>
+    );
   };
-  return (
-    <div>
-      <div className="title">Hey Foodies! Welcome to our Restaurant.</div>
-      <div className="input-conatiner">
-        <input
-          type="text"
-          placeholder="Find for some dilicious food.."
-          className="text-input"
-        />
-        <div className="input-btn"></div>
-      </div>
-      <div className=" category-container">
-        <Category>Roti</Category>
-        <Category>Rice</Category>
-        <Category>Sabji</Category>
-        <Category>Chinese</Category>
-      </div>
-      <h3 className="popular">Our popular</h3>
-      <div className="item-containers">
-        {allDishes ? (
+
+  const handleCategoryFilter = (category) => {
+    setSearchTerm("");
+    if(category === "All"){
+      setSelectedCategory("");
+    }
+    else{
+      setSelectedCategory(category);
+      filterDishes(category.toLowerCase());
+    }
+    
+  };
+
+  const handleSearch = (e) => {
+    const term = e.target.value.toLowerCase();
+    setSearchTerm(term);
+    filterDishes(term);
+  };
+
+  const filterDishes = (filterTerm) => {
+    const filtered = allDishes.filter(
+      (dish) =>
+        dish.dishName.toLowerCase().includes(filterTerm) ||
+        dish.currentCategory.toLowerCase().includes(filterTerm)
+    );
+    setFilteredDishes(filtered);
+  };
+
+  const renderDishes = () => {
+    const itemsToRender =
+      searchTerm || selectedCategory ? filteredDishes : allDishes;
+    return (
+      <>
+        {itemsToRender ? (
           <>
-            {allDishes.map((dish, key) => {
+            {itemsToRender.map((dish, key) => {
               return (
                 <Item
                   dishName={dish.dishName}
@@ -134,7 +154,41 @@ const Menu = ({ cart, setCart }) => {
             <h3>Please Contact Manager</h3>
           </div>
         )}
+      </>
+    );
+  };
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+  const localStorageCart = JSON.parse(localStorage.getItem("cart"));
+
+  const handleOnClickSendToKitchen = () => {
+    navigate(`/confirmOrder/${tableId}`);
+  };
+
+  return (
+    <div>
+      <div className="title">Hey Foodies! Welcome to our Restaurant.</div>
+      <div className="input-conatiner">
+        <input
+          type="text"
+          placeholder="Find for some dilicious food.."
+          className="text-input"
+          onChange={handleSearch}
+          value={searchTerm}
+        />
+        <div className="input-btn">
+          <Search />
+        </div>
       </div>
+      <div className=" category-container">
+        <Category>All</Category>
+        <Category>Roti</Category>
+        <Category>Rice</Category>
+        <Category>Sabji</Category>
+        <Category>Chinese</Category>
+      </div>
+      <h3 className="popular">Our popular</h3>
+      <div className="item-containers">{renderDishes()}</div>
       <div className="button-cover-menu">
         <ButtonForAllPurpose
           text={"Send To Kitchen"}

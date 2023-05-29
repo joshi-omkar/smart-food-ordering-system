@@ -15,7 +15,7 @@ const Navbar = () => {
           <Link to='/'><span className="navlink">Home</span></Link>
           <Link to='/tables'><span className="navlink">Tables</span></Link>
           <Link to='/menu'><span className="navlink">Menu</span></Link>
-          <Link to='/'><span className="navlink">Order History</span></Link>
+          <Link to='/orderHistory'><span className="navlink">Order History</span></Link>
         </div>
       </div>
       <div className="icon-container">

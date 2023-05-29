@@ -1,0 +1,141 @@
+.order-history-conatiner {
+    /* display: flex; */
+    width: 100%;
+    height: 100vh;
+  }
+  
+  .orderhistory-sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 20%;
+    height: 100%;
+    padding: 42px 0;
+    background-color: #000;
+  }
+  
+  .orderhistory-dashboard {
+    width: 80%;
+    height: 100%;
+    background-color: #fff;
+  }
+  
+  .orderhistory-pink {
+    width: 8rem;
+    height: 3rem;
+    background-color: #ffe9e9;
+  }
+  
+  .orderhistory-nav-container {
+    width: 13rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .orderhistory-span {
+    width: 11rem;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-size: 1.2rem;
+    background-color: #a09f9f;
+    border-radius: 1rem;
+  }
+  
+  .orderhistory-logout {
+    padding: 0.6rem 3.5rem;
+    color: #fff;
+    font-size: 1.3rem;
+    background-color: #a09f9f;
+    border-radius: 1rem;
+  }
+  
+  .orderhistory-header-container {
+    width: 100%;
+    height: 20%;
+  }
+  
+  .orderhistory-head {
+    width: calc(100% - 18px);
+    height: 100%;
+    padding: 0 62px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .orderhistory-search {
+    padding: 0.5rem 2.5rem;
+    background-color: #000;
+    border-radius: 1rem;
+    font-size: 1.2rem;
+  }
+  
+  .orderhistory-photo {
+    border-radius: 50%;
+    width: 3.5rem;
+    height: 3.5rem;
+    background-color: #000;
+  }
+  
+  .orderhistory-divider {
+    width: 100%;
+    height: 0.5rem;
+    background-color: #000;
+  }
+  
+  .orderhistory-table-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 80%;
+  }
+  
+  .orderhistory-table {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #252836;
+    border-radius: 1rem;
+    overflow: hidden;
+  }
+  
+  .orderhistory-headers {
+    display: flex;
+  }
+  
+  .orderhistory-line {
+    width: 100%;
+    height: 1px;
+    background-color: #fff;
+  }
+  
+  .orderhistory-index {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    background-color: #252836;
+    width: 64px;
+  }
+  
+  .orderhistory-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    width: 180px;
+  }
+  
+  .orderhistory-section-side {
+    border-right: 1px solid #fff;
+  }
+  

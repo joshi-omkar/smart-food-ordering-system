@@ -42,8 +42,4 @@ router.delete("/:filename", async (req, res) => {
         res.send("An error occured.");
     }
 });
-
-
-
-
 module.exports = router;

@@ -118,6 +118,10 @@
   width: 3rem;
   height: 2.5rem;
   background-color: #6be2be;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
 .category-container {
   width: 100%;
@@ -157,6 +161,10 @@
 .item-description {
   font-size: 8px;
   color: #cececece;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 240px;
 }
 
 .button-cover-menu {
@@ -167,6 +175,7 @@
   padding: 10px;
   display: flex;
   justify-content: center;
+  margin-left: -10px;
 }
 
 .item-container:last-child{

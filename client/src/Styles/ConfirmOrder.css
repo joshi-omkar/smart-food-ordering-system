@@ -12,12 +12,6 @@
   margin-bottom: 30px;
 }
 
-/* .YourOrder{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-} */
-
 .OrderInfoContainer > h3 {
   font-size: 16px;
   color: #fff;
@@ -27,7 +21,10 @@
 .OrderInfoContainer > p {
   font-size: 10px;
   color: #cececece;
-  width: 157px;
+  width: 180px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .SeperateItem {

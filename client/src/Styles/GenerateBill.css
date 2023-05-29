@@ -1,0 +1,78 @@
+.bill-table {
+  display: flex;
+  flex-direction: column;
+  background-color: #1f1d2b;
+  padding: 15px;
+  border-radius: 12px;
+  position: relative;
+  top: 65%;
+}
+
+.h {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.i-name {
+  width: 150px;
+}
+
+.food {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+}
+
+.food-name-price {
+  width: 110px;
+  display: flex;
+  flex-direction: column;
+}
+
+.food-name-price > span:last-of-type {
+  font-size: 12px;
+  color: #a7a7a7;
+}
+
+.total {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin: 70px;
+}
+
+.total > h3 {
+  font-size: 24px;
+}
+
+.total > p {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.generatebill-divider {
+  /* width: 100px; */
+  height: 3px;
+  border-radius: 3px;
+  background-color: #fff;
+}
+
+.t-h {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  font-size: 20px;
+}
+
+.generate-button-cover-menu {
+  position: relative;
+  bottom: 0;
+  background-color: #252836;
+  /* width: 27%; */
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+}

@@ -17,6 +17,8 @@ const Item = ({ dishName, dishPrice, count }) => {
 const Table = ({ tableOrder, table }) => {
   const navigate = useNavigate();
 
+  // console.log(tableOrder(table).length!==0 ? ('occupied') : ('unoccupied'))
+
   const itemsByTableId = tableOrder(table).reduce((acc, item) => {
     const existingItem = acc.find((i) => i.id === item.id);
     if (existingItem) {
@@ -38,17 +40,9 @@ const Table = ({ tableOrder, table }) => {
     return sum + item.count * parseInt(item.dishPrice);
   }, 0);
 
-  // const riceTables = itemsByTableId.reduce((acc, curr) => {
   const riceTables = itemsByTableId.filter(
     (item) => item.currentCategory === "Rice"
   );
-  //   if (riceItems.length) {
-  //     acc[curr.tableId] = (acc[curr.tableId] || []).concat(riceItems);
-  //   }
-  //   return acc;
-  // }, {});
-
-  console.log(riceTables, table);
 
   const handleClickOnGenerateBill = () => {
     navigate(`/generateBill/${table}`);

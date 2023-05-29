@@ -74,7 +74,7 @@ const ItemCard = () => {
   return (
     <div className="ItemCard">
       <img
-        src="https://imgtr.ee/images/2023/04/19/0v1Ul.png"
+        src="http://localhost:3001/file/1682603487202-any-name-271f90bbb9de5745a0c49954ff389725.jpg"
         alt="Matar"
         border="0"
       />
@@ -139,17 +139,17 @@ const ConfirmOrder = ({ cart, setCart }) => {
   const [confirmOrderAnimation, setConformOrderAimantion] = useState(false);
 
   const userInfo = localStorage.getItem("user");
+  
   const localStorageCart = JSON.parse(localStorage.getItem("cart"));
   const handleSendToKitchen = () => {
     if (tableId === "prebook") {
-      const preorderData = { items: [...cart], userInfo: userInfo };
-      console.log(preorderData);
+      const preorderData = { items: [...cart], userInfo: JSON.parse(userInfo) };
+      console.log(typeof(preorderData));
       axios
-        .post("http://localhost:3001/prebook", preorderData)
+        .put("http://localhost:3001/prebook", preorderData)
         .then(function(response) {
           setConformOrderAimantion(true);
           console.log(response);
-          localStorage.removeItem("cart");
           setCart([]);
           setTimeout(() => {
             navigate(`/menu/${tableId}`);
@@ -160,13 +160,11 @@ const ConfirmOrder = ({ cart, setCart }) => {
         });
     } else {
       const orderData = {items: [...cart], tableId: tableId}
-      console.log(orderData)
       axios
         .put("http://localhost:3001/placeOrder", orderData)
         .then(function(response) {
           setConformOrderAimantion(true);
           console.log(response);
-          localStorage.removeItem("cart");
           setCart([]);
           setTimeout(() => {
             navigate(`/cookingOnProcess/${tableId}`);

@@ -1,0 +1,61 @@
+.chart-container > svg {
+  height: 340px;
+}
+
+.chart-container {
+  width: 500px;
+  background-color: #1f1d2b;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 400px;
+}
+
+.chart-axis-x text {
+  transform: rotate(-45deg);
+  text-anchor: end;
+}
+
+/* .chart-axis-x .tick:nth-child(2n) text {
+    transform: rotate(-60deg);
+  } */
+
+.chart-axis-x .tick text {
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chart-line {
+  fill: none;
+  stroke: rgb(38, 127, 200);
+  stroke-width: 2px;
+  transition: all 0.9s ease-in-out;
+}
+
+/* Define styles for the line on hover */
+.chart-line-hover {
+  stroke: rgb(247, 86, 17);
+  stroke-width: 3px;
+  cursor: pointer;
+}
+
+.select-option {
+  border: 1px solid #ea7c69;
+  background-color: #fcc1b7;
+  color: #e23f22;
+  padding: 8px;
+  border-radius: 12px;
+}
+
+.chart-container > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chart-container > div>h3 {
+  font-size: 24px;
+}
