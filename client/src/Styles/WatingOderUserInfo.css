@@ -1,0 +1,44 @@
+.WatingOderUserInfo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 20%;
+}
+
+.RegisterForm{
+    margin-top: 30px;
+    background-color: #1F1D2B;
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 20px;
+}
+
+.RegisterForm > div {
+    margin-top: 20px;
+}
+
+.RegisterForm > div >p{
+    font-size: 10px;
+    font-weight: 400;
+    margin-bottom: 3px;
+}
+
+.RegisterForm > div >p:nth-last-of-type(1){
+    margin-top: 20px;
+}
+
+.RegisterForm > div >input{
+    width: 280px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: none;
+}
+
+.error-handler{
+    margin-top: 0;
+}
