@@ -113,7 +113,8 @@ const EditForm = ({
               </div>
               <div>
                 <p>Dish Description</p>
-                <input
+                <textarea
+                  className='input-textarea'
                   type="textarea"
                   placeholder="Enter the dish description here in 50 to 150 words "
                   onChange={(e) => {

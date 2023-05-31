@@ -19,13 +19,18 @@ const MenuCategories = ({ setCurrentCategory, dishes, setFilter }) => {
   };
 
   const filterByCategory = (categoryName) => {
-    const dishesByCategory = dishes.filter(
-      (dish) => dish.currentCategory === categoryName
-    );
-    setFilter(dishesByCategory);
+    if(categoryName === "All"){
+      setFilter(dishes)
+    }else{
+      const dishesByCategory = dishes.filter(
+        (dish) => dish.currentCategory === categoryName
+      );
+      setFilter(dishesByCategory);
+    }
   };
 
   const categories = [
+    { name: "All" },
     { name: "Roti" },
     { name: "Sabji" },
     { name: "Rice" },

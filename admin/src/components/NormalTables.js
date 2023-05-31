@@ -41,7 +41,7 @@ const NormalTables = ({ tableNo, tableStatus }) => {
 
   useEffect(() => {
     getData();
-  }, [setAllOrders]);
+  }, [allOrders, setAllOrders]);
 
   const tableOrder = (table) =>
     allOrders
@@ -63,8 +63,6 @@ const NormalTables = ({ tableNo, tableStatus }) => {
       }
     });
   });
-
-  console.log(tableStatus);
 
   return (
     <div className="Normaltables">

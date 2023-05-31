@@ -18,7 +18,7 @@ const Menu = () => {
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [dishes]);
 
   return (
     <div className="Menu">

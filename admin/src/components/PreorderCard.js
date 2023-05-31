@@ -51,7 +51,7 @@ const PreorderCard = ({ prebookOrder, firstFalseKey }) => {
           <span className="pre-user-name">{prebookOrder[0].userName}</span>
           <span className="pre-user-no">{prebookOrder[0].mobileNo}</span>
         </div>
-        <div className="pre-head-count">4 People</div>
+        {/* <div className="pre-head-count">4 People</div> */}
       </div>
       <div className="pre-divider"></div>
       <div className="pre-list">

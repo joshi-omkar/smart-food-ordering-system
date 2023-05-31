@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import '../Styles/MenuCategories.css'
 
 const UploadImageButton = ({ setImage, buttonName }) => {
   const hiddenFileInput = React.useRef(null);
@@ -10,7 +11,7 @@ const UploadImageButton = ({ setImage, buttonName }) => {
   };
   return (
     <div className="upload-image-button">
-      <button id="submit-btn" className="btn btn-primary" onClick={handleClick}>
+      <button id="submit-btn" className="btn btn-primary upload-button-style" onClick={handleClick}>
         {buttonName}
       </button>
       <input
@@ -57,10 +58,10 @@ const UploadImage = ({setImageUrl}) => {
     <div>
       {image ? (
         <div style={{display: 'flex'}}>
-          <div className="buttons-after-upload-image-model">
+          <div style={{display: "flex", gap: '10px', alignItems: 'center'}} className="buttons-after-upload-image-model">
             <button
               id="submit-btn"
-              className="add-item-button"
+              className="upload-button-style"
               type={"submit"}
               onClick={onSubmit}
             >
@@ -68,12 +69,12 @@ const UploadImage = ({setImageUrl}) => {
             </button>
             <UploadImageButton
               setImage={setImage}
-              className='add-item-button'
+              className='upload-button-style'
               buttonName={"Choose another"}
             />
             <button
               id="submit-btn"
-              className="add-item-button"
+              className="upload-button-style"
               onClick={onClickRemoveImage}
             >
               Remove

@@ -54,10 +54,12 @@ const MenuItemContainer = ({ currentCategory, dishData }) => {
               <p>X</p>
             </button>
           </div>
-        ) : (
+        ) : currentCategory !== "All" ? (
           <button onClick={handleOnClickEdit}>
             <p>Edit</p>
           </button>
+        ) : (
+          ""
         )}
       </div>
       <div className="MenuItemContainerMain">

@@ -17,9 +17,7 @@ const PreorderBooking = ({ tableStatus }) => {
 
   useEffect(() => {
     getData();
-  }, []);
-
-  console.log(allPrebookOrders)
+  }, [allPrebookOrders]);
 
   const userData = allPrebookOrders.map((user)=>{
     const userInfo = user.userInfo
