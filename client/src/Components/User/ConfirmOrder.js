@@ -9,6 +9,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Confirmed } from "./OrderConfirm";
+import { SERVER_URL } from "../../Utils/Constants";
 
 const YourOrder = ({ items, setCart }) => {
   const [num, setNum] = useState(0);
@@ -74,7 +75,7 @@ const ItemCard = () => {
   return (
     <div className="ItemCard">
       <img
-        src="http://localhost:3001/file/1682603487202-any-name-271f90bbb9de5745a0c49954ff389725.jpg"
+        src={`${SERVER_URL}/file/1682603487202-any-name-271f90bbb9de5745a0c49954ff389725.jpg`}
         alt="Matar"
         border="0"
       />
@@ -146,7 +147,7 @@ const ConfirmOrder = ({ cart, setCart }) => {
       const preorderData = { items: [...cart], userInfo: JSON.parse(userInfo) };
       console.log(typeof(preorderData));
       axios
-        .put("http://localhost:3001/prebook", preorderData)
+        .put(`${SERVER_URL}/prebook`, preorderData)
         .then(function(response) {
           setConformOrderAimantion(true);
           console.log(response);
@@ -161,7 +162,7 @@ const ConfirmOrder = ({ cart, setCart }) => {
     } else {
       const orderData = {items: [...cart], tableId: tableId}
       axios
-        .put("http://localhost:3001/placeOrder", orderData)
+        .put(`${SERVER_URL}/placeOrder`, orderData)
         .then(function(response) {
           setConformOrderAimantion(true);
           console.log(response);

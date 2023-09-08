@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import UploadImage from "./UploadImage";
+import { SERVER_URL } from '../Utils/Constants';
 
 function RadioToggleButton({ options, selectedOption, setSelectedOption }) {
     const handleOptionChange = (event) => {
@@ -52,7 +53,7 @@ const EditForm = ({
       };
   
       await axios
-        .post("http://localhost:3001/addItem", itemDetails)
+        .post(`${SERVER_URL}/addItem`, itemDetails)
         .then((res) => {
           if (res.data.message) {
             console.log(res.data.message);

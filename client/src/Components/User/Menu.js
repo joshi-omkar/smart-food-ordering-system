@@ -5,6 +5,7 @@ import ButtonForAllPurpose from "../ButtonForAllPurpose";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import Search from "../../Assets/search";
+import { SERVER_URL } from "../../Utils/Constants";
 
 const Item = ({
   dishName,
@@ -75,7 +76,7 @@ const Menu = ({ cart, setCart }) => {
   const [filteredDishes, setFilteredDishes] = useState(allDishes);
   const [selectedCategory, setSelectedCategory] = useState("");
 
-  const baseURL = "http://localhost:3001/getItem";
+  const baseURL = `${SERVER_URL}/getItem`;
   const navigate = useNavigate();
   const { tableId } = useParams();
   const getData = () => {

@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import PreorderCard from "./PreorderCard";
 import "../Styles/PreorderBooking.css";
+import { SERVER_URL } from "../Utils/Constants";
 
 const PreorderBooking = ({ tableStatus }) => {
   const [allPrebookOrders, setAllPrebookOrders] = useState([]);
 
-  const getData = () => {
-    axios
-      .get("http://localhost:3001/getPrebookOrders")
+  const getData = async () => {
+    await axios
+      .get(`${SERVER_URL}/getPrebookOrders`)
       .then((res) => {
         setAllPrebookOrders(res.data);
       })
@@ -17,14 +18,14 @@ const PreorderBooking = ({ tableStatus }) => {
 
   useEffect(() => {
     getData();
-  }, [allPrebookOrders]);
+  }, []);
 
-  const userData = allPrebookOrders.map((user)=>{
-    const userInfo = user.userInfo
-    return userInfo
-  })
+  const userData = allPrebookOrders.map((user) => {
+    const userInfo = user.userInfo;
+    return userInfo;
+  });
 
-  const prebookOrders = allPrebookOrders.map((order, key) => {
+  const prebookOrders = allPrebookOrders.map((order) => {
     const preorder = order.items;
     const userInfo = order.userInfo;
     const itemsCount = preorder.reduce((acc, item) => {
@@ -65,6 +66,7 @@ const PreorderBooking = ({ tableStatus }) => {
         {prebookOrders.map((prebookOrder, key) => {
           return (
             <PreorderCard
+              key={key}
               prebookOrder={prebookOrder}
               firstFalseKey={firstFalseKey}
               userData={userData}

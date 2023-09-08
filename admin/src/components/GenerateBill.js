@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Lottie from "react-lottie";
 import animationData from "../Assets/tick.json";
+import { SERVER_URL } from "../Utils/Constants";
 
 const GenerateBill = () => {
   const { tableId } = useParams();
@@ -63,7 +64,7 @@ const GenerateBill = () => {
   const handleOnClickGenerateBill = (e) => {
     e.preventDefault();
     axios
-      .delete(`http://localhost:3001/deleteOrder/${tableId}`)
+      .delete(`${SERVER_URL}/deleteOrder/${tableId}`)
       .then((res) => {
         console.log(res);
         setTimeout(() => {
