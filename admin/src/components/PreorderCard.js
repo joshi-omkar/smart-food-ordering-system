@@ -2,6 +2,7 @@ import React from "react";
 import "../Styles/PreorderCard.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { SERVER_URL } from "../Utils/Constants";
 
 const Item = ({ dishName, count }) => {
   return (
@@ -24,7 +25,7 @@ const PreorderCard = ({ prebookOrder, firstFalseKey }) => {
     };
     const id = orderData.items[0].mobileNo;
     axios
-      .put("http://localhost:3001/placeOrder", orderData)
+      .put(`${SERVER_URL}/placeOrder`, orderData)
       .then(function (response) {
         console.log(response);
         deletePreorder(id);
@@ -36,10 +37,10 @@ const PreorderCard = ({ prebookOrder, firstFalseKey }) => {
 
   const deletePreorder = (id) => {
     axios
-      .delete(`http://localhost:3001/deletePreorder/${id}`)
+      .delete(`${SERVER_URL}/deletePreorder/${id}`)
       .then((res) => {
         console.log(res);
-        navigate(0)
+        // navigate(0)
       })
       .catch((err) => console.log(err));
   };

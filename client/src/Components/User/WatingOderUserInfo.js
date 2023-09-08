@@ -5,6 +5,7 @@ import ButtonForAllPurpose from "../ButtonForAllPurpose";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import IconImg from "../../Assets/Icon.png";
+import { SERVER_URL } from "../../Utils/Constants";
 
 const WatingOderUserInfo = () => {
   const [name, setName] = useState("");
@@ -25,7 +26,7 @@ const WatingOderUserInfo = () => {
       const user = { name, mobileNo };
 
       await axios
-        .post("http://localhost:3001/customer_details", user)
+        .post(`${SERVER_URL}/customer_details`, user)
         .then((res) => {
           navigate(`/menu/${tableId}`);
           console.log(res.data);
@@ -61,7 +62,7 @@ const WatingOderUserInfo = () => {
               setMobileNo(e.target.value);
             }}
             value={mobileNo}
-            placeholder="eg. 6969696969"
+            placeholder="eg. 9182736455"
             required={true}
           />
         </div>

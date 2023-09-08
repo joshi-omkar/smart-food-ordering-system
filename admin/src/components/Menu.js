@@ -3,10 +3,11 @@ import MenuCategories from "./MenuCategories";
 import MenuItemContainer from "./MenuItemContainer";
 import "../Styles/MenuCategories.css";
 import axios from "axios";
+import { SERVER_URL } from "../Utils/Constants";
 
 const Menu = () => {
   const [currentCategory, setCurrentCategory] = useState("");
-  const baseURL = "http://localhost:3001/getItem";
+  const baseURL = `${SERVER_URL}/getItem`;
   const [dishes, setDishes] = useState([]);
   const [filter, setFilter] = useState([]);
 
@@ -18,7 +19,7 @@ const Menu = () => {
 
   useEffect(() => {
     getData();
-  }, [dishes]);
+  }, []);
 
   return (
     <div className="Menu">

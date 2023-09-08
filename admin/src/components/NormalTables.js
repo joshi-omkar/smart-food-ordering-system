@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Table from "./Table";
 import axios from "axios";
+import { SERVER_URL } from "../Utils/Constants";
 
 const TableStatus = ({ color, type }) => {
   return (
@@ -30,7 +31,7 @@ const NormalTables = ({ tableNo, tableStatus }) => {
   const [allOrders, setAllOrders] = useState([]);
   const getData = () => {
     axios
-      .get("http://localhost:3001/getOrders")
+      .get(`${SERVER_URL}/getOrders`)
       .then((res) => {
         setAllOrders(res.data);
       })
@@ -41,7 +42,7 @@ const NormalTables = ({ tableNo, tableStatus }) => {
 
   useEffect(() => {
     getData();
-  }, [allOrders, setAllOrders]);
+  }, []);
 
   const tableOrder = (table) =>
     allOrders
@@ -89,7 +90,7 @@ const NormalTables = ({ tableNo, tableStatus }) => {
         {tableNo.map((table, key) => {
           return (
             <>
-              <Table key={table} tableOrder={tableOrder} table={table} />
+              <Table key={key} tableOrder={tableOrder} table={table} />
             </>
           );
         })}

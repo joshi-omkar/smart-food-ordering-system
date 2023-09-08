@@ -3,6 +3,7 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import "../../Styles/GenerateBill.css";
 import ButtonForAllPurpose from "../ButtonForAllPurpose";
+import { SERVER_URL } from "../../Utils/Constants";
 
 const GenerateBill = () => {
   const { tableId } = useParams();
@@ -11,7 +12,7 @@ const GenerateBill = () => {
 
   const getData = async () => {
     await axios
-      .get(`http://localhost:3001/getOrders/${tableId}`)
+      .get(`${SERVER_URL}/getOrders/${tableId}`)
       .then((res) => {
         console.log(res);
         setTableData(res.data);

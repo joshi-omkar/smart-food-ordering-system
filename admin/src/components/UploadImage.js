@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import '../Styles/MenuCategories.css'
+import { SERVER_URL } from "../Utils/Constants";
 
 const UploadImageButton = ({ setImage, buttonName }) => {
   const hiddenFileInput = React.useRef(null);
@@ -38,7 +39,7 @@ const UploadImage = ({setImageUrl}) => {
     try {
       const response = await axios({
         method: "post",
-        url: "http://localhost:3001/file/upload",
+        url: `${SERVER_URL}/file/upload`,
         data: formData,
         headers: { "Content-Type": "multipart/form-data" },
       });
